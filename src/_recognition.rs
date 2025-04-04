@@ -66,7 +66,7 @@ impl Rec {
 
     fn run_model(&self, input: &ArrayBase<OwnedRepr<f32>, Dim<[usize; 4]>>) -> PaddleOcrResult<Vec<(char, f32)>>{
         let outputs = self.model.run(inputs!["x" => input.view()]?)?;
-        let output = outputs.iter().next().ok_or(PaddleOcrError::custom("no output"))?.1;
+        let output = outputs.iter().next().ok_or(PaddleOcrError::Custom("no output".to_string()))?.1;
         let output = output.try_extract_tensor::<f32>()?;
         let output = output.view();
         let output = output.slice(s![0, .., ..]);

@@ -1,17 +1,39 @@
-#[derive(thiserror::Error, Debug)]
+use std::{error, fmt::Display, io};
+
+
+#[derive(Debug)]
 pub enum PaddleOcrError {
-    #[error("ort error:`{0}`")]
-    Ort(#[from] ort::Error),
-    #[error("io error:`{0}`")]
-    Io(#[from] std::io::Error),
-    #[error("custom error:`{0}`")]
-    Custom(String)
+    Io(io::Error),
+    Ort(ort::Error),
+    Custom(String),
 }
 
-impl PaddleOcrError {
-    pub fn custom(s: &str) -> Self {
-        Self::Custom(s.to_string())
+impl From<io::Error> for PaddleOcrError {
+    fn from(value: io::Error) -> Self {
+        Self::Io(value)
     }
 }
+
+impl From<ort::Error> for PaddleOcrError {
+    fn from(value: ort::Error) -> Self {
+        Self::Ort(value)
+    }
+}
+
+impl Display for PaddleOcrError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "{}",
+            match self {
+                Self::Io(e) => e.to_string(),
+                Self::Ort(e) => e.to_string(),
+                Self::Custom(e) => e.to_string(),
+            }
+        )
+    }
+}
+
+impl error::Error for PaddleOcrError  {}
 
 pub type PaddleOcrResult<T> = Result<T, PaddleOcrError>;
