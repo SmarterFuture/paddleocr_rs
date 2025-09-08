@@ -1,11 +1,12 @@
-mod detection;
+mod det;
 mod error;
 
 pub use error::PaddleOcrError;
+pub use det::Det;
 
 #[cfg(test)]
 mod tests {
-    use crate::detection::Det;
+    use crate::det::Det;
 
     #[test]
     fn it_works() -> Result<(), Box<dyn std::error::Error>> {
