@@ -1,7 +1,23 @@
 mod detection;
 mod error;
-mod _recognition;
 
-pub use detection::Detection;
 pub use error::PaddleOcrError;
 
+#[cfg(test)]
+mod tests {
+    use crate::detection::Det;
+
+    #[test]
+    fn it_works() -> Result<(), Box<dyn std::error::Error>> {
+        let mut det = Det::from_file("./models/ch_PP-OCRv4_det_infer.onnx")?;
+        // let mut det = Det::from_file("./models/ch_PP-OCRv5_mobile_det.onnx")?;
+        println!("peter pan");
+        let img = image::open("./test/tmp.protokol5_1.png")?;
+        let a = det.find_text_rect(&img)?;
+        println!("{}", a.len());
+        // for sub in det.find_text_rect(&img)? {
+        //     println!("{:?}", sub);
+        // }
+        Ok(())
+    }
+}

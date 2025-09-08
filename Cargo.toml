@@ -2,13 +2,17 @@
 name = "paddleocr_rs"
 version = "0.1.1"
 edition = "2021"
+description = "paddleocr-v4 onnxrumtime infer"
 license = "AGPL-3.0"
 homepage = "https://github.com/yuanyan3060/paddleocr_rs"
 repository = "https://github.com/yuanyan3060/paddleocr_rs"
+readme = "README.md"
 keywords = ["paddle", "ocr", "onnx"]
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-image = "0.25.5"
-imageproc = "0.25.0"
-ndarray = "0.16.1"
-ort = "2.0.0-rc.9"
+image = "0.25"
+imageproc = "0.25"
+ndarray = "0.16"
+ort = { version = "2.0.0-rc.6" }
+thiserror = "1.0.56"
